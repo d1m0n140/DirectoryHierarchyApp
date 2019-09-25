@@ -1,0 +1,45 @@
+﻿@model DirectoryHierarchyApp.Models.DirectoryViewModel
+@{
+    ViewBag.Title = Model.DirectoryPath + Model.DirectoryName;
+}
+
+<link rel="stylesheet" href="~/Content/DropdownBlock.css">
+<h3>
+    @Html.ActionLink("Parent folder", "Index", new { id = Model.DirectoryPath})
+</h3>
+<h3>
+    <strong>
+        @Model.DirectoryPath@Model.DirectoryName |
+        @Html.ActionLink("Rename", "Rename", new { id = Model.Id })
+    </strong>
+</h3>
+
+<h3>
+    @Html.ActionLink("Create folder", "Create", new { id = Model.Id })
+</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DirectoryPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DirectoryName)
+        </th>
+    </tr>
+    @foreach (var item in Model.Subdirectories)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DirectoryPath)
+            </td>
+            <td>
+                @Html.ActionLink(item.DirectoryName, "Index", new { id = item.DirectoryPath + item.DirectoryName })
+            </td>
+            <td>
+                @Html.ActionLink("Rename", "Rename", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
